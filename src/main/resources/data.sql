@@ -1,0 +1,1 @@
+insert into Advertiser values ('Jai', 100, 'Pravesh');
