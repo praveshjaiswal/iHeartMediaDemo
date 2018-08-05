@@ -1,4 +1,4 @@
-package com.java.iHMDemo;
+package com.java.ihmdemo;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

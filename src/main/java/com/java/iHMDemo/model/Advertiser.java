@@ -1,4 +1,4 @@
-package com.java.iHMDemo.model;
+package com.java.ihmdemo.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
