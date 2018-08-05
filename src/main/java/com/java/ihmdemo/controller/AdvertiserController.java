@@ -32,14 +32,20 @@ public class AdvertiserController {
 		System.out.println("Home");
 		return "Home";
 	}*/
-
 	
 	//To add Advertiser to DB
 	@ApiOperation(value ="Adds new Advertiser to database")
 	@PostMapping("/advertiser/add")
 	@ResponseBody
 	public String addAdvertiser(@RequestBody Advertiser advertiser){
-		repo.save(advertiser);
+		try{
+			repo.save(advertiser);
+		}catch(Exception ex)
+		{
+			System.out.println("Error: "+ex.getMessage());
+			throw new RuntimeException("Invalid data");
+		}
+		
 		return "Recode added successfully";
 	}
 
@@ -53,10 +59,18 @@ public class AdvertiserController {
 		System.out.println("Updating record...");
 			
 		Optional<Advertiser> advertiser1=repo.findById(id);
-		if(!advertiser1.isPresent())
+		if(!advertiser1.isPresent()){
 			resp = "Error: No record found!";
+			throw new RuntimeException("No record found!");
+		}
 		else{
-			repo.save(advertiser);
+			try{
+				repo.save(advertiser);
+			}catch(Exception ex)
+			{
+				System.out.println("Error: "+ex.getMessage());
+				throw new RuntimeException("Invalid data");
+			}
 			resp = "Recode updated successfully";
 		}
 		
@@ -73,8 +87,10 @@ public class AdvertiserController {
 		System.out.println("Deleting record...");
 			
 		Optional<Advertiser> advertiser1=repo.findById(id);
-		if(!advertiser1.isPresent())
+		if(!advertiser1.isPresent()){
 			resp = "Error: No record found!";
+			throw new RuntimeException("No record found!");
+		}
 		else{
 			repo.deleteById(id);
 			resp = "Recode deleted successfully";
@@ -87,12 +103,24 @@ public class AdvertiserController {
 	@ApiOperation(value ="Retrive Advertiser by id from database")
 	@GetMapping("/advertiser/get/{id}")
 	@ResponseBody
-	public Advertiser getAdvertiser(@PathVariable("id") String id){
+	public Optional<Advertiser> getAdvertiser(@PathVariable("id") String id){
 		
 		String resp;
 		System.out.println("Searching record...");
 			
-		Advertiser advertiser=repo.findById(id).orElse(new Advertiser());//or can use Optional also
+		//Advertiser advertiser=repo.findById(id).orElse(new Advertiser());//or can use Optional also
+		Optional<Advertiser> advertiser=repo.findById(id);
+		
+		if(!advertiser.isPresent()){
+			//resp = "Error: No record found!";
+			System.out.println("No Record found!");
+			throw new RuntimeException("No record found!");
+		}
+		else{
+			System.out.println("Record found.");
+			//resp = "Recode deleted successfully";
+		}
+		
 		return advertiser;
 	}
 
@@ -103,11 +131,13 @@ public class AdvertiserController {
 	@ResponseBody
 	public String chkAdvertiser(@PathVariable("id") String id){
 		
-		String resp;
+		String resp="Empty!";
 			
 		Optional<Advertiser> advertiser1=repo.findById(id);
 		if(!advertiser1.isPresent())
-			resp = "Error: No record found!";
+			//throw new RecordNotFoundException(id);
+			throw new RuntimeException("No record found!");
+		//resp = "Error: No record found!";
 		else{
 			Long lBal= advertiser1.get().getAdvCreditLimit();
 			
@@ -116,5 +146,6 @@ public class AdvertiserController {
 		return resp;
 	}
 
+			
 	
 }
