@@ -1,27 +1,20 @@
-"# iHeartMediaDemo" 
-"# iHeartMediaDemo" 
+#iHeartMediaDemo 
 
-"#Aug 03#"
-Created a spring project
-Web
-H2DB
-Git
+**Version 1.0.0**
 
-"#Aug 04#"
-H2 integration
+Code and document sample for iHeartMedia Demo
 
+A readme for iHeartMedia API Demo
 
-"#Aug 04#"
-Implemented APIs, CRUD Operations, 
-Advertiser bean and REST APIs implementations
-Swagger
-Actuator
-Updated the package structure
+---
+
+## Contributors
+
+- Pravesh Jaiswal <praveshjaiswal@gmail.com>
 
 
-"#Aug 05#"
-Implemented APIs 
-Error Handling
-Swagger updated
+---
 
+## License & copyright
 
+© 2018 iHeartMedia, USA

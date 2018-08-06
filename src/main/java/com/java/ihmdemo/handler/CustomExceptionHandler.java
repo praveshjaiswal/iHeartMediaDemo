@@ -1,5 +1,7 @@
 package com.java.ihmdemo.handler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +12,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@ExceptionHandler(Exception.class)
 	@ResponseBody
     public final ResponseEntity<ErrorMessage> somethingWentWrong(Exception ex) {
-       System.out.println("log message: "+ex.getMessage());
+		logger.info("***Logged message: "+ex.getMessage());
        
        ErrorMessage exceptionResponse = new ErrorMessage(ex.getMessage(), 
     		   "Please try after some time!");

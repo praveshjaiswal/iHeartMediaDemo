@@ -1,7 +1,17 @@
 package com.java.ihmdemo.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+/*
+ * 	Entity for API Demo
+ * 	@author Pravesh Jaiswal <praveshjaiswal@gmail.com>
+ * 	Date: 08/06/2018
+ * 
+ */
+
 
 @Entity
 public class Advertiser {
@@ -10,7 +20,6 @@ public class Advertiser {
 	private String advContactName;
 	private String advName;
 	private Long advCreditLimit;
-
 	
 	public String getAdvContactName() {
 		return advContactName;
