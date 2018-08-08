@@ -1,8 +1,5 @@
 package com.java.ihmdemo.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,27 +15,14 @@ import com.java.ihmdemo.model.Advertiser;
  * 
  */
 
-
 @Component
 public class AdvertiserService {
+
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-	private static List<Advertiser> advertisers = new ArrayList<>();
-	
-	static String resp="Record added successfully";
-	
-	static {
-		
-		//Initialize Data
-//		Advertiser jai = {'Jai','Pravesh',100};
-	//	Advertiser modi = {'Modi','Smita',101};
-
-
-		//advertisers.add({'Jai','Pravesh',100});
-		///advertisers.add({'Modi','Smita',101});
-	}
-
-	@Autowired
+		    
+    String resp;
+    
+    @Autowired
 	AdvertiserRepo repo;
 	
 	public String addAdvertiser(Advertiser advertiser){
@@ -51,12 +35,12 @@ public class AdvertiserService {
 			throw new RuntimeException("Invalid data");
 		}
 		
-		resp = "Recode added successfully";
+		resp = "Record added successfully";
 		return resp;
 	}
 	
 	public String updateAdvertiser(String id, Advertiser advertiser){
-	
+		
 		logger.info("Updating record...");
 			
 		Optional<Advertiser> advertiser1=repo.findById(id);
@@ -72,30 +56,28 @@ public class AdvertiserService {
 				logger.info("Error: "+ex.getMessage());
 				throw new RuntimeException("Invalid data");
 			}
-			resp = "Recode updated successfully";
+			resp = "Record updated successfully";
 		}
 		
 		return resp;
 	}
 	
 	
-	public Optional<Advertiser> getAdvertiser(String id)	
+	public Advertiser getAdvertiser(String id)	
 	{
-		
-		String resp;
 		logger.info("Searching record for: "+id);
 			
-		//Advertiser advertiser=repo.findById(id).orElse(new Advertiser());//or can use Optional also
-		Optional<Advertiser> advertiser=repo.findById(id);
 		
-		if(!advertiser.isPresent()){
-			//resp = "Error: No record found!";
+		Advertiser advertiser=repo.findById(id).orElse(new Advertiser("","",(long)0));//or can use Optional also
+		//Optional<Advertiser> advertiser=repo.findById(id);
+		
+		if(advertiser==null){
 			logger.info("No Record found!");
 			throw new RuntimeException("No record found!");
 		}
 		else{
 			logger.info("Record found.");
-			//resp = "Recode deleted successfully";
+			
 		}
 		
 		return advertiser;
@@ -103,24 +85,22 @@ public class AdvertiserService {
 	
 
 	public String chkAdvertiser(String id){
-		//String resp="Empty!";
-		
+			
 		Optional<Advertiser> advertiser1=repo.findById(id);
 		if(!advertiser1.isPresent())
-			//throw new RecordNotFoundException(id);
 			throw new RuntimeException("No record found!");
-		//resp = "Error: No record found!";
 		else{
+			
 			Long lBal= advertiser1.get().getAdvCreditLimit();
 			
 			resp = lBal>0?"Credit Available":"Zero Balance Available!";
 		}
+		
 	
 		return resp;
 	}
 	
 	public String processTransaction(String id){
-		//String resp;
 		logger.info("Deducting credit...");
 			
 		Advertiser advertiser=repo.findById(id).orElse(null);
@@ -153,7 +133,6 @@ public class AdvertiserService {
 	}
 	
 	public String deleteAdvertiser(String id){
-		//String resp;
 		logger.info("Deleting record...");
 			
 		Optional<Advertiser> advertiser1=repo.findById(id);
@@ -163,11 +142,10 @@ public class AdvertiserService {
 		}
 		else{
 			repo.deleteById(id);
-			resp = "Recode deleted successfully";
+			resp = "Record deleted successfully";
 		}
 		
 		return resp;
 	}
 	
-
 }

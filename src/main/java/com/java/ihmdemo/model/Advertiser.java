@@ -1,7 +1,5 @@
 package com.java.ihmdemo.model;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -20,7 +18,20 @@ public class Advertiser {
 	private String advContactName;
 	private String advName;
 	private Long advCreditLimit;
+
+	public Advertiser(){
+		this.advContactName="";
+		this.advName="";
+		this.advCreditLimit=(long)0;
+		
+	}
 	
+	public Advertiser(String advContactName, String advName, long advCreditLimit) {
+		// TODO Auto-generated constructor stub
+		this.advContactName=advContactName;
+		this.advName=advName;
+		this.advCreditLimit=advCreditLimit;
+	}
 	public String getAdvContactName() {
 		return advContactName;
 	}
